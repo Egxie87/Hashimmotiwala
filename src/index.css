@@ -120,7 +120,6 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  overflow-x: hidden;
 }
 
 body {
@@ -131,15 +130,15 @@ body {
   background-color: var(--surface);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior-y: none;
-  overflow-x: hidden;
   width: 100%;
   position: relative;
+  overflow-x: clip;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  touch-action: manipulation;
 }
 
 img {
@@ -153,6 +152,7 @@ button {
   border: none;
   background: none;
   font-family: inherit;
+  touch-action: manipulation;
 }
 
 input,
@@ -160,6 +160,14 @@ select,
 textarea {
   font-family: inherit;
   font-size: inherit;
+  touch-action: manipulation;
+}
+
+.table-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+  scrollbar-width: thin;
 }
 
 ul, ol {

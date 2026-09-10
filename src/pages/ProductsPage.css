@@ -14,7 +14,7 @@
 /* Filter Bar */
 .products-filter-bar { position: sticky; top: 94px; z-index: 40; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); box-shadow: var(--shadow-sm); padding: var(--space-sm) 0; }
 .filter-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; }
-.filter-pills { display: flex; gap: var(--space-xxs); overflow-x: auto; padding-bottom: 2px; }
+.filter-pills { display: flex; gap: var(--space-xxs); overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; padding-bottom: 2px; }
 .filter-pill { padding: 0.5rem 0.75rem; border-radius: var(--radius-lg); font-family: var(--font-mono); font-size: 13px; font-weight: 600; white-space: nowrap; transition: all var(--transition-base); background: var(--surface-container); color: var(--on-surface-variant); border: none; cursor: pointer; }
 .filter-pill:hover { background: var(--surface-container-high); color: var(--on-surface); }
 .filter-pill.active { background: var(--primary); color: var(--on-primary); box-shadow: var(--shadow-sm); }
@@ -134,6 +134,7 @@
     overflow-x: auto;
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
     scrollbar-width: none;
     gap: 6px;
     padding-bottom: 2px;

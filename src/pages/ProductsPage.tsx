@@ -183,7 +183,7 @@ const ProductsPage: React.FC = () => {
             <div><span className="section-tag">Polymer Engineering Matrix</span><h2 className="section-title">Resin Characteristics & Standard ASTM Validation</h2></div>
             <p className="section-desc">Every batch undergoes in-house melt flow indexing (MFI), differential scanning calorimetry (DSC), and tensile elongation testing prior to mould ejection.</p>
           </div>
-          <div className="card" style={{ overflow: 'hidden' }}>
+          <div className="card table-scroll-wrap">
             <table className="data-table">
               <thead><tr><th>Polymer Classification</th><th>ASTM / ISO Test</th><th>Yield Strength</th><th>Chemical Resistance</th><th>Heat Deflection (HDT)</th><th style={{ textAlign: 'right' }}>Primary Application</th></tr></thead>
               <tbody>

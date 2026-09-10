@@ -126,7 +126,7 @@ const CustomMouldingPage: React.FC = () => {
             <div><span className="section-tag">Module 02 // Rheology & Chemistry</span><h2 className="section-title">Engineering Polymer Material Matrix</h2></div>
             <p className="section-desc">Standard test conditions: 23°C @ 50% RH</p>
           </div>
-          <div className="card" style={{ overflow: 'auto' }}>
+          <div className="card table-scroll-wrap">
             <table className="data-table">
               <thead><tr><th>Polymer Classification</th><th>Density (g/cm³)</th><th>Tensile Strength (MPa)</th><th>Flexural Modulus (GPa)</th><th>HDT @ 0.45 MPa (°C)</th><th>Shrinkage Rate (%)</th><th>Typical Applications</th></tr></thead>
               <tbody>
