@@ -34,8 +34,74 @@
   .rfq-form-wrap { position: static; }
   .freight-cards { grid-template-columns: repeat(2, 1fr); }
 }
+
 @media (max-width: 767px) {
-  .form-grid-2 { grid-template-columns: 1fr; }
-  .freight-cards { grid-template-columns: 1fr; }
-  .contact-hero-actions { flex-direction: column; }
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+
+  .checkbox-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .file-drop {
+    padding: 16px 12px;
+  }
+
+  .rfq-form-wrap .card-body {
+    padding: 16px 14px;
+    gap: var(--space-sm);
+  }
+
+  .rfq-form-wrap .btn {
+    font-size: 11px;
+    line-height: 1.35;
+    padding: 12px 14px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .freight-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .contact-hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .contact-hero-actions .btn {
+    width: 100%;
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+
+  .dfm-metrics-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: var(--space-md);
+  }
+
+  .dfm-metric {
+    padding: 10px 12px;
+    gap: 2px;
+  }
+
+  .dfm-metric-val {
+    font-size: 18px;
+  }
+
+  .dfm-metric-label {
+    font-size: 10px;
+  }
+
+  .dfm-metric-sub {
+    font-size: 11px;
+    line-height: 1.3;
+  }
 }

@@ -28,8 +28,89 @@
   .cad-grid { grid-template-columns: 1fr; }
   .dispatches-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
 @media (max-width: 767px) {
-  .dfm-metrics-row { grid-template-columns: 1fr 1fr; }
-  .dispatches-grid { grid-template-columns: 1fr; }
-  .dfm-metric-val { font-size: 22px; }
+  .dfm-metrics-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: var(--space-md);
+  }
+
+  .dfm-metric {
+    padding: 10px 12px;
+    gap: 2px;
+  }
+
+  .dfm-metric-val {
+    font-size: 18px;
+  }
+
+  .dfm-metric-label {
+    font-size: 10px;
+  }
+
+  .dfm-metric-sub {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .cad-dropzone {
+    padding: 20px 14px;
+    gap: var(--space-xs);
+  }
+
+  .cad-dropzone h3 {
+    font-size: 16px;
+  }
+
+  .cad-dropzone p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .cad-formats {
+    gap: 4px;
+  }
+
+  .cad-formats .badge {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .cad-features {
+    gap: 6px;
+  }
+
+  .cad-feature {
+    font-size: 12px;
+  }
+
+  .cad-upload-area .btn {
+    font-size: 11px;
+    line-height: 1.35;
+    padding: 12px 14px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dispatches-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .dispatch-img-wrap {
+    height: 180px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
 }

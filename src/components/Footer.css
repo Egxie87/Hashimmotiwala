@@ -233,9 +233,10 @@
   }
 
   .back-to-top {
-    bottom: 82px;
-    right: 26px;
-    width: 40px;
-    height: 40px;
+    bottom: 74px;
+    right: 22px;
+    width: 36px;
+    height: 36px;
+    z-index: 80;
   }
 }

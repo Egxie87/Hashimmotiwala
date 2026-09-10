@@ -871,42 +871,192 @@
 }
 
 @media (max-width: 767px) {
+  .hero {
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-lg);
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .hero-content {
+    gap: var(--space-xs);
+  }
+
   .hero-title {
-    font-size: 28px;
-    line-height: 34px;
+    font-size: clamp(26px, 7.5vw, 34px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .hero-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
   }
 
   .hero-metrics {
     grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: var(--space-xs);
+  }
+
+  .metric-card {
+    padding: 10px 12px;
+  }
+
+  .metric-value {
+    font-size: 20px;
+  }
+
+  .metric-label {
+    font-size: 10px;
+  }
+
+  .metric-sub {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .hero-visual {
+    margin-top: var(--space-xs);
+  }
+
+  .hero-img-wrapper {
+    height: 200px;
+  }
+
+  .hero-flow-strip {
+    padding: 10px 12px;
+  }
+
+  .flow-title {
+    font-size: 11px;
+  }
+
+  .hero-telemetry {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 12px;
   }
 
   .process-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .process-card {
+    padding: 16px;
   }
 
   .divisions-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .division-img-wrap {
+    height: 180px;
   }
 
   .resin-tabs {
-    gap: var(--space-xxs);
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 6px;
+  }
+
+  .resin-tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .resin-tab {
     font-size: 11px;
     padding: 0.5rem var(--space-sm);
+    flex-shrink: 0;
+  }
+
+  .resin-content {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .resin-title {
+    font-size: 22px;
   }
 
   .resin-metrics {
     grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .resin-metric-box {
+    padding: 8px 10px;
+  }
+
+  .rm-value {
+    font-size: 16px;
+  }
+
+  .resin-right {
+    padding: 14px;
+  }
+
+  .facility-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .facility-map {
+    height: 180px;
+  }
+
+  .facility-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  .facility-stat {
+    padding: 6px;
+  }
+
+  .stat-label,
+  .stat-value {
+    font-size: 10px;
+  }
+
+  .cta-banner {
+    padding: 20px 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
   }
 
   .cta-title {
-    font-size: 24px;
+    font-size: 22px;
+    line-height: 1.25;
   }
 
   .cta-actions {
+    width: 100%;
     flex-direction: column;
+    gap: 8px;
   }
 
   .cta-actions .btn {

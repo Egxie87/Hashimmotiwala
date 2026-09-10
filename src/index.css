@@ -120,6 +120,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -130,7 +131,10 @@ body {
   background-color: var(--surface);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 a {
@@ -257,6 +261,11 @@ ul, ol {
 }
 
 /* ---------- Layout ---------- */
+.main-content-wrap {
+  padding-top: 108px;
+  min-height: calc(100vh - 400px);
+}
+
 .container {
   max-width: var(--max-width-content);
   margin: 0 auto;
@@ -275,6 +284,32 @@ ul, ol {
 
 .section-highlight {
   background-color: var(--surface-container-high);
+}
+
+@media (max-width: 768px) {
+  .main-content-wrap {
+    padding-top: 60px;
+  }
+
+  .container {
+    padding: 0 var(--gutter-mobile);
+  }
+
+  .section {
+    padding: var(--space-xl) 0;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+  }
+
+  .btn {
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 /* ---------- Grid ---------- */

@@ -68,7 +68,7 @@ const App: React.FC = () => {
       <RevealObserver />
       <a href="#main-content" className="skip-to-content">Skip to main content</a>
       <Header />
-      <div id="main-content" style={{ paddingTop: '94px' }}>
+      <div id="main-content" className="main-content-wrap">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />

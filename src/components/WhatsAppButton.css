@@ -183,22 +183,28 @@
 /* Responsive adjustment for tablets & mobile */
 @media (max-width: 768px) {
   .whatsapp-float-container {
-    bottom: 20px;
-    right: 20px;
+    bottom: 18px;
+    right: 18px;
+    z-index: 85;
   }
 
   .whatsapp-float-btn {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
   }
 
   .whatsapp-icon {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
 
-  /* Pill badge on mobile can remain touch-only or discreet */
   .whatsapp-pill-badge {
-    display: none;
+    display: none !important;
   }
+}
+
+body:has(.mobile-drawer.open) .whatsapp-float-container {
+  opacity: 0;
+  pointer-events: none;
 }

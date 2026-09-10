@@ -73,15 +73,145 @@
   .products-metrics { grid-template-columns: repeat(2, 1fr); }
   .products-grid { grid-template-columns: repeat(2, 1fr); }
   .transit-grid { grid-template-columns: repeat(2, 1fr); }
-  .products-filter-bar { top: 82px; }
+  .products-filter-bar { top: 60px; }
 }
+
 @media (max-width: 767px) {
-  .products-metrics { grid-template-columns: 1fr 1fr; }
-  .products-grid { grid-template-columns: 1fr; }
-  .transit-grid { grid-template-columns: 1fr; }
-  .products-hero-actions { flex-direction: column; width: 100%; }
-  .products-hero-actions .btn { width: 100%; }
-  .filter-controls { width: 100%; flex-direction: column; }
-  .search-input { width: 100%; }
-  .pm-val { font-size: 28px; }
+  .products-hero-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .products-hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .products-hero-actions .btn {
+    width: 100%;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  .products-metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+  }
+
+  .pm-card {
+    padding: 10px 12px;
+  }
+
+  .pm-val {
+    font-size: 22px;
+  }
+
+  .pm-label {
+    font-size: 10px;
+  }
+
+  .pm-sub {
+    font-size: 11px;
+  }
+
+  .products-filter-bar {
+    top: 60px;
+    padding: 8px 0;
+  }
+
+  .filter-bar-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .filter-pills {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 2px;
+    width: 100%;
+  }
+
+  .filter-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-pill {
+    padding: 6px 12px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .filter-controls {
+    width: 100%;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .product-img-wrap {
+    height: 190px;
+  }
+
+  .product-body {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .product-title {
+    font-size: 16px;
+  }
+
+  .product-desc {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .product-specs {
+    padding: 8px 10px;
+  }
+
+  .spec-row {
+    font-size: 11px;
+  }
+
+  .product-price {
+    font-size: 20px;
+  }
+
+  .product-actions {
+    gap: 6px;
+  }
+
+  .product-actions .btn {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .transit-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .transit-val {
+    font-size: 24px;
+  }
 }
