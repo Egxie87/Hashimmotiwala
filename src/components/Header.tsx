@@ -106,9 +106,9 @@ const Header: React.FC = () => {
 
             {/* Hamburger */}
             <button
-              className="hamburger hide-desktop"
+              className="hamburger"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle navigation menu"
+              aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileOpen}
             >
               <span className="material-symbols-outlined icon-md">
@@ -121,12 +121,29 @@ const Header: React.FC = () => {
 
       {/* Mobile Drawer */}
       <div className={`mobile-drawer${mobileOpen ? ' open' : ''}`}>
+        <div className="mobile-drawer-header">
+          <Link to="/" className="mobile-drawer-brand" onClick={() => setMobileOpen(false)}>
+            <Logo size={32} />
+            <div className="mobile-drawer-brand-text">
+              <span className="drawer-brand-name">HASHIM MOTIWALA</span>
+              <span className="drawer-brand-tagline">PLASTIC & POLYMER ENG</span>
+            </div>
+          </Link>
+          <button
+            className="mobile-drawer-close"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close navigation menu"
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
+        </div>
         <nav className="mobile-nav" aria-label="Mobile navigation">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
               className={`mobile-nav-link${location.pathname === link.path ? ' active' : ''}`}
+              onClick={() => setMobileOpen(false)}
             >
               {link.label}
               {link.badge && <span className="nav-badge">{link.badge}</span>}
