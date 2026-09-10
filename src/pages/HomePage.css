@@ -1072,4 +1072,139 @@
   .ticker-right {
     display: none;
   }
+
+  .ticker-inner {
+    justify-content: center;
+  }
+
+  .ticker-left {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .ticker-live {
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+}
+
+/* ── Pixel 7 (412px), iPhone XR (414px), iPhone SE (375px) ── */
+@media (max-width: 480px) {
+  .hero-content .pill {
+    font-size: 10px;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.35;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .hero-title {
+    font-size: clamp(24px, 7vw, 32px);
+    line-height: 1.22;
+  }
+
+  .hero-desc {
+    font-size: 13.5px;
+    line-height: 21px;
+  }
+
+  .flow-info {
+    min-width: 0;
+  }
+
+  .flow-title {
+    font-size: 10.5px;
+  }
+
+  .flow-sub {
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .resin-grade {
+    font-size: 11px;
+    word-break: break-word;
+    line-height: 1.3;
+  }
+
+  .resin-metrics {
+    gap: 6px;
+  }
+
+  .resin-metric-box {
+    padding: 6px 8px;
+  }
+
+  .rm-label {
+    font-size: 9.5px;
+  }
+
+  .rm-value {
+    font-size: 15px;
+  }
+
+  .rm-sub {
+    font-size: 10.5px;
+  }
+
+  .facility-stats {
+    gap: 4px;
+    padding: 6px 8px;
+  }
+
+  .facility-stat {
+    padding: 4px;
+    text-align: center;
+  }
+
+  .stat-label,
+  .stat-value {
+    font-size: 9px;
+    line-height: 1.25;
+  }
+}
+
+/* ── Small Mobile Screens (iPhone SE 1st Gen, 320px - 360px) ── */
+@media (max-width: 360px) {
+  .hero-metrics {
+    gap: 6px;
+  }
+
+  .metric-card {
+    padding: 8px 8px;
+  }
+
+  .metric-value {
+    font-size: 17px;
+  }
+
+  .metric-label {
+    font-size: 9px;
+  }
+
+  .metric-sub {
+    font-size: 10px;
+  }
+
+  .hero-img-wrapper {
+    height: 175px;
+  }
+
+  .hero-telemetry {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .facility-stats {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .facility-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 6px;
+  }
 }

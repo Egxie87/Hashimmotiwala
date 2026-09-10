@@ -798,6 +798,12 @@ a:focus-visible {
   }
 }
 
+@media (max-width: 360px) {
+  :root {
+    --gutter-mobile: 0.625rem;
+  }
+}
+
 @media (min-width: 768px) {
   .hide-desktop {
     display: none !important;

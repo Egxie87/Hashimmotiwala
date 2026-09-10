@@ -448,6 +448,7 @@
     font-size: 11px;
     gap: 3px;
     border-radius: var(--radius-lg);
+    min-height: 36px;
   }
 
   .btn-rfq .material-symbols-outlined {
@@ -455,14 +456,20 @@
   }
 
   .hamburger {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 }
 
+/* Pixel 7 (412px), iPhone XR (414px), iPhone SE (375px) */
 @media (max-width: 480px) {
   .header-main {
     padding: 0 10px;
+  }
+
+  .header-main-inner {
+    height: 58px;
+    gap: 6px;
   }
 
   .header-brand {
@@ -481,6 +488,54 @@
     padding: 5px 8px;
     font-size: 10px;
     gap: 2px;
+    min-height: 34px;
+  }
+
+  .btn-rfq .material-symbols-outlined {
+    font-size: 15px;
+  }
+
+  .hamburger {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mobile-nav-link {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+}
+
+/* Small mobile devices (iPhone SE 1st gen, 320px - 360px) */
+@media (max-width: 360px) {
+  .header-main {
+    padding: 0 6px;
+  }
+
+  .header-main-inner {
+    gap: 4px;
+  }
+
+  .header-brand {
+    gap: 5px;
+  }
+
+  .brand-name {
+    font-size: 12px;
+  }
+
+  .brand-tagline {
+    display: none;
+  }
+
+  .btn-rfq {
+    padding: 4px 6px;
+    font-size: 9.5px;
+    min-height: 32px;
+  }
+
+  .btn-rfq .material-symbols-outlined {
+    font-size: 14px;
   }
 
   .hamburger {
