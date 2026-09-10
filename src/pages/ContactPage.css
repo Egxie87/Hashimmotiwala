@@ -1,0 +1,41 @@
+/* Contact Page Styles */
+.contact-hero { background: var(--surface-container-lowest); }
+.contact-hero-actions { display: flex; gap: var(--space-sm); margin-top: var(--space-sm); }
+.dfm-metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); margin-top: var(--space-xl); }
+.dfm-metric { padding: var(--space-md); background: var(--surface-container-low); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: var(--space-xxs); }
+.dfm-metric-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--secondary); letter-spacing: 0.06em; }
+.dfm-metric-val { font-family: var(--font-display); font-size: 28px; font-weight: 900; color: var(--on-surface); letter-spacing: -0.02em; }
+.dfm-metric-sub { font-size: 12px; color: var(--on-surface-variant); }
+
+/* RFQ Form & Info Grid */
+.contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-xl); align-items: flex-start; }
+.rfq-form-wrap { position: sticky; top: 120px; }
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
+.form-group { display: flex; flex-direction: column; gap: var(--space-xxs); }
+.form-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--on-surface); }
+.checkbox-grid { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-xxs); }
+.file-drop { border: 2px dashed var(--outline-variant); border-radius: var(--radius-xl); padding: var(--space-lg); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-xxs); cursor: pointer; transition: border-color var(--transition-fast); }
+.file-drop:hover { border-color: var(--primary); }
+.contact-info-col { display: flex; flex-direction: column; gap: var(--space-md); }
+.contact-address { display: flex; flex-direction: column; gap: 2px; font-size: 14px; color: var(--on-surface-variant); }
+.contact-lines { display: flex; flex-direction: column; gap: var(--space-sm); }
+.contact-line { display: flex; gap: var(--space-xs); align-items: flex-start; }
+.contact-line div { display: flex; flex-direction: column; }
+.contact-line strong { font-size: 14px; color: var(--on-surface); }
+.contact-line span { font-size: 13px; color: var(--on-surface-variant); }
+.cert-badges-row { display: flex; flex-wrap: wrap; gap: var(--space-xxs); }
+
+/* Freight Cards */
+.freight-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .rfq-form-wrap { position: static; }
+  .freight-cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 767px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
+  .freight-cards { grid-template-columns: 1fr; }
+  .contact-hero-actions { flex-direction: column; }
+}

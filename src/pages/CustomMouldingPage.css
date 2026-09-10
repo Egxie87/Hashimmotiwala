@@ -1,0 +1,35 @@
+/* Custom Moulding / DFM Page Styles */
+.dfm-hero { background: var(--surface-container-lowest); }
+.dfm-metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); margin-top: var(--space-xl); }
+.dfm-metric { padding: var(--space-md); background: var(--surface-container-low); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: var(--space-xxs); }
+.dfm-metric-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--secondary); letter-spacing: 0.06em; }
+.dfm-metric-val { font-family: var(--font-display); font-size: 28px; font-weight: 900; color: var(--on-surface); letter-spacing: -0.02em; }
+.dfm-metric-sub { font-size: 12px; color: var(--on-surface-variant); }
+
+/* CAD Section */
+.cad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); }
+.cad-dropzone { text-align: center; padding: var(--space-xl); border: 2px dashed var(--outline-variant); border-radius: var(--radius-xl); display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
+.cad-formats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-xxs); }
+.cad-features { display: flex; flex-direction: column; gap: var(--space-xs); }
+.cad-feature { display: flex; align-items: center; gap: var(--space-xs); font-size: 13px; color: var(--on-surface-variant); }
+.rule-item { display: flex; gap: var(--space-xs); align-items: flex-start; padding: var(--space-xs) 0; border-bottom: 1px solid var(--surface-container); }
+.rule-item:last-child { border: none; }
+
+/* Dispatches */
+.dispatches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+.dispatch-img-wrap { position: relative; height: 200px; overflow: hidden; }
+.dispatch-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.dispatch-card:hover .dispatch-img-wrap img { transform: scale(1.05); }
+.dispatch-metrics { display: flex; justify-content: space-between; margin-top: var(--space-xs); }
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .dfm-metrics-row { grid-template-columns: repeat(2, 1fr); }
+  .cad-grid { grid-template-columns: 1fr; }
+  .dispatches-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 767px) {
+  .dfm-metrics-row { grid-template-columns: 1fr 1fr; }
+  .dispatches-grid { grid-template-columns: 1fr; }
+  .dfm-metric-val { font-size: 22px; }
+}
