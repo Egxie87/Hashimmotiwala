@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './WhatsAppButton.css';
 
 interface WhatsAppButtonProps {
@@ -7,19 +7,14 @@ interface WhatsAppButtonProps {
 }
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
-  phoneNumber = '919820012345',
+  phoneNumber = '923062215149',
   defaultMessage = 'Hello Hashim Motiwala Plastics, I would like to inquire about mould tooling and precision injection moulding.'
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
+  const cleanNumber = phoneNumber.replace(/\D/g, '');
+  const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(defaultMessage)}`;
 
   return (
-    <div 
-      className="whatsapp-float-container"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="whatsapp-float-container">
       {/* Tooltip / Expanded pill */}
       <a
         href={whatsappUrl}
