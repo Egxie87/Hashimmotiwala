@@ -1,0 +1,173 @@
+/* Custom Moulding / DFM Page Styles */
+.dfm-hero { background: var(--surface-container-lowest); }
+
+/* CAD Section */
+.cad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); }
+.cad-dropzone {
+  text-align: center;
+  padding: var(--space-xl);
+  border: 2px dashed var(--outline-variant);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cad-dropzone:hover,
+.cad-dropzone.drag-active {
+  border-color: var(--primary);
+  background: var(--surface-container-low);
+}
+
+.cad-dropzone.has-file {
+  border-style: solid;
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.cad-file-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+}
+
+.file-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--surface-container-lowest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.file-info-text {
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+}
+
+.file-name {
+  display: block;
+  font-weight: 700;
+  color: var(--on-surface);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-size {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--on-surface-variant);
+}
+
+.file-remove-btn {
+  background: none;
+  border: none;
+  color: var(--outline);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.file-remove-btn:hover {
+  background: var(--surface-container-high);
+  color: var(--error);
+}
+
+.cad-formats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-xxs); }
+.cad-features { display: flex; flex-direction: column; gap: var(--space-xs); }
+.cad-feature { display: flex; align-items: center; gap: var(--space-xs); font-size: 13px; color: var(--on-surface-variant); }
+
+/* Dispatches */
+.dispatches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); align-items: stretch; }
+.dispatch-card { display: flex; flex-direction: column; height: 100%; }
+.dispatch-img-wrap { position: relative; height: 200px; overflow: hidden; flex-shrink: 0; }
+.dispatch-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.dispatch-card:hover .dispatch-img-wrap img { transform: scale(1.05); }
+.dispatch-card .card-body { display: flex; flex-direction: column; flex: 1; }
+.dispatch-card .division-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--on-surface); min-height: 48px; }
+.dispatch-metrics { display: flex; justify-content: space-between; margin-top: auto; padding-top: var(--space-xs); border-top: 1px solid var(--surface-container); }
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .cad-grid { grid-template-columns: 1fr; }
+  .dispatches-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+
+  .cad-dropzone {
+    padding: 20px 14px;
+    gap: var(--space-xs);
+  }
+
+  .cad-dropzone h3 {
+    font-size: 16px;
+  }
+
+  .cad-dropzone p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .cad-formats {
+    gap: 4px;
+  }
+
+  .cad-formats .badge {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .cad-features {
+    gap: 6px;
+  }
+
+  .cad-feature {
+    font-size: 12px;
+  }
+
+  .cad-upload-area .btn {
+    font-size: 11px;
+    line-height: 1.35;
+    padding: 12px 14px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dispatches-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .dispatch-img-wrap {
+    height: 180px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}

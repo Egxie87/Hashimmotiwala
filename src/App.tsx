@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { RfqProvider } from './context/RfqContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import RfqDrawer from './components/RfqDrawer';
+import ToastContainer from './components/ToastContainer';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import CustomMouldingPage from './pages/CustomMouldingPage';
@@ -63,22 +66,26 @@ function RevealObserver() {
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <ScrollToTop />
-      <RevealObserver />
-      <a href="#main-content" className="skip-to-content">Skip to main content</a>
-      <Header />
-      <div id="main-content" className="main-content-wrap">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/custom-moulding" element={<CustomMouldingPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
-      </div>
-      <Footer />
-      <WhatsAppButton />
-    </Router>
+    <RfqProvider>
+      <Router>
+        <ScrollToTop />
+        <RevealObserver />
+        <a href="#main-content" className="skip-to-content">Skip to main content</a>
+        <Header />
+        <div id="main-content" className="main-content-wrap">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/custom-moulding" element={<CustomMouldingPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+        </div>
+        <Footer />
+        <WhatsAppButton />
+        <RfqDrawer />
+        <ToastContainer />
+      </Router>
+    </RfqProvider>
   );
 };
 

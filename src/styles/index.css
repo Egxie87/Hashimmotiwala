@@ -5,6 +5,45 @@
 
 /* ---------- Google Fonts ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ---------- Tailwind theme bridge ----------
+   Exposes the design tokens below as Tailwind utilities
+   (bg-surface-container-low, text-on-surface-variant, font-display, …).
+   Note: Tailwind utilities sit in @layer utilities, so the unlayered
+   component classes in this codebase (.btn, .card-body, …) win on conflict. */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary: var(--on-primary);
+  --color-primary-fixed: var(--primary-fixed);
+  --color-on-primary-fixed: var(--on-primary-fixed);
+  --color-secondary: var(--secondary);
+  --color-surface: var(--surface);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-error: var(--error);
+  --color-inverse-surface: var(--inverse-surface);
+}
+
+@theme {
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Inter', system-ui, monospace;
+
+  --animate-pop-in: pop-in 0.16s ease;
+
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
 
 /* ---------- CSS Custom Properties (Design Tokens) ---------- */
 :root {
@@ -109,116 +148,89 @@
 }
 
 /* ---------- Reset & Base ---------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Lives in @layer base so Tailwind utilities (mt-*, p-*, bg-*) can override it;
+   unlayered rules would beat every utility regardless of specificity. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
 
-body {
-  font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--on-surface);
-  background-color: var(--surface);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  width: 100%;
-  max-width: 100%;
-  position: relative;
-  overflow-x: hidden;
-}
+  body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--on-surface);
+    background-color: var(--surface);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-#root,
-.app {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  position: relative;
-}
+  #root,
+  .app {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-  touch-action: manipulation;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+    touch-action: manipulation;
+  }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
-  touch-action: manipulation;
-}
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    touch-action: manipulation;
+  }
 
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  touch-action: manipulation;
-}
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+    touch-action: manipulation;
+  }
 
-.table-scroll-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x pan-y;
-  scrollbar-width: thin;
-}
+  .table-scroll-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    scrollbar-width: thin;
+  }
 
-ul, ol {
-  list-style: none;
+  ul,
+  ol {
+    list-style: none;
+  }
 }
 
 /* ---------- Typography Scale ---------- */
-.text-display-hero {
-  font-family: var(--font-display);
-  font-size: 56px;
-  font-weight: 800;
-  line-height: 64px;
-  letter-spacing: -0.03em;
-}
-
-.text-display-hero-mobile {
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 800;
-  line-height: 42px;
-  letter-spacing: -0.02em;
-}
-
-.text-headline-lg {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 40px;
-  letter-spacing: -0.02em;
-}
-
-.text-headline-lg-mobile {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 32px;
-  letter-spacing: -0.015em;
-}
-
 .text-headline-md {
   font-family: var(--font-display);
   font-size: 24px;
@@ -235,13 +247,6 @@ ul, ol {
   letter-spacing: -0.01em;
 }
 
-.text-body-lg {
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 26px;
-}
-
 .text-body-md {
   font-family: var(--font-body);
   font-size: 14px;
@@ -254,30 +259,6 @@ ul, ol {
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
-}
-
-.text-label-md {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 18px;
-  letter-spacing: 0.02em;
-}
-
-.text-label-sm {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 14px;
-  letter-spacing: 0.06em;
-}
-
-.text-code-metric {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 18px;
-  letter-spacing: -0.01em;
 }
 
 /* ---------- Layout ---------- */
@@ -332,32 +313,11 @@ ul, ol {
   }
 }
 
-/* ---------- Grid ---------- */
-.grid {
-  display: grid;
-  gap: var(--space-md);
+/* ---------- Spacing Utility ----------
+   Custom-token gap; layout utilities otherwise come from Tailwind. */
+.gap-xs {
+  gap: var(--space-xs);
 }
-
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-4 { grid-template-columns: repeat(4, 1fr); }
-.grid-12 { grid-template-columns: repeat(12, 1fr); }
-
-/* ---------- Flex Utilities ---------- */
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.items-start { align-items: flex-start; }
-.items-end { align-items: flex-end; }
-.justify-between { justify-content: space-between; }
-.justify-center { justify-content: center; }
-.flex-wrap { flex-wrap: wrap; }
-.gap-xxs { gap: var(--space-xxs); }
-.gap-xs { gap: var(--space-xs); }
-.gap-sm { gap: var(--space-sm); }
-.gap-md { gap: var(--space-md); }
-.gap-lg { gap: var(--space-lg); }
-.gap-xl { gap: var(--space-xl); }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -412,16 +372,6 @@ ul, ol {
   border-color: var(--outline);
 }
 
-.btn-ghost {
-  background: var(--surface-container);
-  color: var(--on-surface);
-}
-
-.btn-ghost:hover {
-  background: var(--primary);
-  color: var(--on-primary);
-}
-
 .btn-lg {
   padding: 0.75rem 1.5rem;
 }
@@ -438,6 +388,9 @@ ul, ol {
   box-shadow: var(--shadow-sm);
   overflow: hidden;
   transition: box-shadow var(--transition-base), transform var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card:hover {
@@ -446,6 +399,9 @@ ul, ol {
 
 .card-body {
   padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 /* ---------- Badges & Pills ---------- */
@@ -607,64 +563,23 @@ ul, ol {
   display: inline-block;
 }
 
-.icon-xs { font-size: 14px; }
-.icon-sm { font-size: 18px; }
-.icon-md { font-size: 24px; }
-.icon-lg { font-size: 32px; }
+.icon-xs {
+  font-size: 14px;
+}
+
+.icon-sm {
+  font-size: 18px;
+}
+
+.icon-md {
+  font-size: 24px;
+}
+
+.icon-lg {
+  font-size: 32px;
+}
 
 /* ---------- Animations ---------- */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-@keyframes ping {
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-ping {
-  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
 /* Scroll-triggered reveal */
 .reveal {
   opacity: 0;
@@ -674,16 +589,12 @@ ul, ol {
 }
 
 .reveal.visible,
-.visible .reveal,
-.visible.reveal,
-section.visible .reveal,
-.reveal-visible {
+.visible .reveal {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Ensure hero section content is always visible without delay */
-.hero-section .reveal,
 .contact-hero .reveal,
 .dfm-hero .reveal,
 .products-hero .reveal {
@@ -691,10 +602,21 @@ section.visible .reveal,
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
 
 /* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar {
@@ -766,39 +688,11 @@ a:focus-visible {
   .container {
     padding: 0 var(--gutter-tablet);
   }
-
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .grid-3 { grid-template-columns: repeat(2, 1fr); }
-
-  .text-display-hero {
-    font-size: 36px;
-    line-height: 42px;
-    letter-spacing: -0.02em;
-  }
-
-  .text-headline-lg {
-    font-size: 26px;
-    line-height: 32px;
-  }
 }
 
 @media (max-width: 767px) {
   .container {
     padding: 0 var(--gutter-mobile);
-  }
-
-  .grid-4 { grid-template-columns: 1fr; }
-  .grid-3 { grid-template-columns: 1fr; }
-  .grid-2 { grid-template-columns: 1fr; }
-
-  .text-display-hero {
-    font-size: 28px;
-    line-height: 34px;
-  }
-
-  .text-headline-lg {
-    font-size: 22px;
-    line-height: 28px;
   }
 
   .section {
@@ -816,42 +710,3 @@ a:focus-visible {
   }
 }
 
-@media (min-width: 768px) {
-  .hide-desktop {
-    display: none !important;
-  }
-}
-
-/* ---------- Utility Colors ---------- */
-.text-primary { color: var(--primary); }
-.text-secondary { color: var(--secondary); }
-.text-tertiary { color: var(--tertiary); }
-.text-on-surface { color: var(--on-surface); }
-.text-on-surface-variant { color: var(--on-surface-variant); }
-.text-on-primary { color: var(--on-primary); }
-.text-error { color: var(--error); }
-
-.bg-surface { background-color: var(--surface); }
-.bg-surface-low { background-color: var(--surface-container-low); }
-.bg-surface-container { background-color: var(--surface-container); }
-.bg-surface-high { background-color: var(--surface-container-high); }
-.bg-surface-lowest { background-color: var(--surface-container-lowest); }
-.bg-primary { background-color: var(--primary); }
-
-/* ---------- Misc Utilities ---------- */
-.uppercase { text-transform: uppercase; }
-.font-bold { font-weight: 700; }
-.font-extrabold { font-weight: 800; }
-.font-semibold { font-weight: 600; }
-.tracking-wide { letter-spacing: 0.06em; }
-.tracking-tight { letter-spacing: -0.02em; }
-.w-full { width: 100%; }
-.text-center { text-align: center; }
-.relative { position: relative; }
-.overflow-hidden { overflow: hidden; }
-.shrink-0 { flex-shrink: 0; }
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}

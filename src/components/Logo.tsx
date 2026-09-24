@@ -12,9 +12,8 @@ const Logo: React.FC<LogoProps> = ({ size = 44, className = '' }) => (
     viewBox="0 0 120 120"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`shrink-0 ${className}`}
     aria-label="Hashim Motiwala Plastics & Polymer Engineering"
-    style={{ flexShrink: 0 }}
   >
     {/* Outer hexagonal ring — representing polymer molecular structure */}
     <path

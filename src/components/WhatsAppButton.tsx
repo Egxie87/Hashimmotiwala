@@ -1,5 +1,5 @@
 import React from 'react';
-import './WhatsAppButton.css';
+import '../styles/components/WhatsAppButton.css';
 
 interface WhatsAppButtonProps {
   phoneNumber?: string;

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useAnimations';
-import './HomePage.css';
+import StatStrip, { type Stat } from '../components/ui/StatStrip';
+import Tabs from '../components/ui/Tabs';
+import '../styles/pages/HomePage.css';
 
 /* ── Resin Data ── */
 const resinData: Record<string, {
-  title: string; grade: string; desc: string; tag: string;
+  title: string; short: string; grade: string; desc: string; tag: string;
   density: string; mfi: string; tensile: string; shrinkage: string;
   bars: { label: string; value: string; pct: number }[];
 }> = {
   hdpe: {
-    title: 'HDPE (High-Density Polyethylene)', tag: 'Automotive & Packaging',
+    title: 'HDPE (High-Density Polyethylene)', short: 'HDPE', tag: 'Automotive & Packaging',
     grade: 'Grade: HM-5010 // Blow & Heavy Injection',
     desc: 'Exceptional environmental stress crack resistance (ESCR), low moisture absorption, and high impact strength even at cryogenic temperatures down to -40°C.',
     density: '0.952 g/cm³', mfi: '7.0 g/10min', tensile: '26.5 MPa', shrinkage: '1.8 – 2.5%',
@@ -22,7 +24,7 @@ const resinData: Record<string, {
     ],
   },
   pp: {
-    title: 'PP Copolymer (Impact Grade)', tag: 'Logistics & Storage',
+    title: 'PP Copolymer (Impact Grade)', short: 'PP Copolymer', tag: 'Logistics & Storage',
     grade: 'Grade: PP-CP-300 // Nucleated Automotive Grade',
     desc: 'Balanced flexural modulus, superior fatigue resistance for living hinges, and reduced warpage in wide-surface industrial crates and storage units.',
     density: '0.905 g/cm³', mfi: '12.0 g/10min', tensile: '31.0 MPa', shrinkage: '1.2 – 1.8%',
@@ -34,7 +36,7 @@ const resinData: Record<string, {
     ],
   },
   pc: {
-    title: 'Lexan™ Polycarbonate (Optical Clear)', tag: 'Optical & Safety',
+    title: 'Lexan™ Polycarbonate (Optical Clear)', short: 'Polycarbonate', tag: 'Optical & Safety',
     grade: 'Grade: PC-141R // Flame Retardant UL94 V-0',
     desc: 'Virtually unbreakable impact resistance, crystal clarity with 89% optical transmission, and dimensional stability under elevated working temperatures up to 135°C.',
     density: '1.20 g/cm³', mfi: '10.5 g/10min', tensile: '66.0 MPa', shrinkage: '0.5 – 0.7%',
@@ -46,7 +48,7 @@ const resinData: Record<string, {
     ],
   },
   pom: {
-    title: 'Delrin™ POM Polyacetal', tag: 'Gears & Mechanisms',
+    title: 'Delrin™ POM Polyacetal', short: 'POM Acetal', tag: 'Gears & Mechanisms',
     grade: 'Grade: POM-FG-100 // Low Friction Gear Grade',
     desc: 'Outstanding dimensional stability, high stiffness, low coefficient of friction against metals, and high resistance to organic solvents and greases.',
     density: '1.42 g/cm³', mfi: '9.0 g/10min', tensile: '71.0 MPa', shrinkage: '1.9 – 2.3%',
@@ -59,7 +61,14 @@ const resinData: Record<string, {
   },
 };
 
-const resinKeys = Object.keys(resinData);
+const resinTabs = Object.entries(resinData).map(([key, r]) => ({ key, label: r.short }));
+
+const heroStats: Stat[] = [
+  { label: 'Injection Cells', value: '35+', sub: '50T – 1800T Clamping' },
+  { label: 'Annual Parts', value: '12M+', sub: 'Automotive & FMCG' },
+  { label: 'Tolerance', value: '±0.02', unit: 'mm', sub: 'Optical CMM Verified' },
+  { label: 'Dispatch SLA', value: '48-Hr', sub: 'Standard SKU Docks' },
+];
 
 /* ── Process Steps ── */
 const processSteps = [
@@ -97,29 +106,6 @@ const HomePage: React.FC = () => {
 
   return (
     <main className="home-page">
-      {/* ── Operational Ticker ── */}
-      <section className="ticker-bar">
-        <div className="container ticker-inner">
-          <div className="ticker-left">
-            <span className="ticker-live">
-              <span className="material-symbols-outlined icon-sm">factory</span>
-              FACILITY LIVE: NAVI MUMBAI CLUSTER W-14
-            </span>
-            <span className="ticker-divider hide-mobile">|</span>
-            <span className="hide-mobile ticker-metric">35 HYDRAULIC & SERVO CELLS RUNNING</span>
-          </div>
-          <div className="ticker-right">
-            <span className="ticker-metric">
-              <span className="ticker-dot" /> OEE: 94.2%
-            </span>
-            <span className="ticker-divider hide-mobile">|</span>
-            <span className="hide-mobile ticker-metric">CYCLE VARIANCE: ±0.003s</span>
-            <span className="ticker-divider">|</span>
-            <span className="ticker-metric ticker-highlight">NEXT DISPATCH: 14:00 IST (DOCK B)</span>
-          </div>
-        </div>
-      </section>
-
       {/* ── Hero Section ── */}
       <section className="hero section" ref={heroRef}>
         <div className="container hero-grid reveal">
@@ -130,7 +116,7 @@ const HomePage: React.FC = () => {
               TIER-1 OEM & INDUSTRIAL THERMOPLASTICS
             </div>
             <h1 className="hero-title">
-              High-Precision <span className="text-primary">Injection Moulding</span> & Industrial Polymer Synthesis.
+              High-Precision <span className="text-primary">Injection Moulding</span> & Contract Tooling.
             </h1>
             <p className="hero-desc">
               End-to-end engineered contract manufacturing from virgin polymer granules to certified zero-defect components. Hashim Motiwala delivers multi-cavity hot runner moulds, structural foam storage bins, automotive gears, and high-impact logistics containers with micron-level repeatability.
@@ -142,42 +128,14 @@ const HomePage: React.FC = () => {
               </Link>
               <Link to="/contact" className="btn btn-outline btn-lg">
                 <span className="material-symbols-outlined icon-sm text-primary">upload_file</span>
-                Upload CAD / Request RFQ
+                Submit CAD / Request RFQ
               </Link>
             </div>
-            <div className="hero-metrics">
-              <div className="metric-card">
-                <span className="metric-value">35+</span>
-                <span className="metric-label">CNC Injection Cells</span>
-                <span className="metric-sub">50T – 1800T Clamping</span>
-              </div>
-              <div className="metric-card">
-                <span className="metric-value">12M+</span>
-                <span className="metric-label">Annual Parts</span>
-                <span className="metric-sub">Automotive & FMCG</span>
-              </div>
-              <div className="metric-card">
-                <span className="metric-value">±0.02<small>mm</small></span>
-                <span className="metric-label">Tolerance</span>
-                <span className="metric-sub">Optical CMM Verified</span>
-              </div>
-              <div className="metric-card">
-                <span className="metric-value">48-Hr</span>
-                <span className="metric-label">Rapid Dispatch</span>
-                <span className="metric-sub">Standard SKU Docks</span>
-              </div>
-            </div>
+            <StatStrip stats={heroStats} className="mt-2" />
           </div>
           {/* Right */}
           <div className="hero-visual">
-            <div className="hero-batch-status">
-              <span className="status-dot">
-                <span className="status-dot-ping" />
-                <span className="status-dot-core" />
-              </span>
-              <span className="batch-text">BATCH #HM-2025-08 IN PRODUCTION</span>
-            </div>
-            <div className="hero-image-card">
+            <Link to="/custom-moulding" className="hero-image-card" aria-label="View tooling capabilities">
               <div className="hero-img-wrapper">
                 <img
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUW1fN4JT6f57W6ETlVr-OeE4wQZyZOPwWgVX1eb3tifzOXrrxJ4EcOUfubEvwRPyEXoMx4ungmCj6FvQF8-GtnTbWEj6fOIyjZyRdL-J54-tXvfK8u5VlhR9p66-NtEKrxMKRyva8gLVvznp_JCTsx7tanUycqRis1LiMu6-xLB2VU5_tZycmKXOWhLnUBW5YHRgRcsuCuSX3IMXVbDTjFUoNkhQjK1BHd4RtBFM8OoX4-D2PL_XWBZWDlh9ENzC-9Q"
@@ -185,34 +143,29 @@ const HomePage: React.FC = () => {
                   loading="eager"
                 />
                 <div className="hero-img-overlay">
-                  <span className="overlay-label">Live Shopfloor View</span>
-                  <span className="overlay-title">Finished Polyketone & HDPE Pallet Stacks</span>
+                  <span className="overlay-label">TTC Industrial Works</span>
+                  <span className="overlay-title">High-Density Polyolefin Production Floor</span>
+                  <span className="overlay-sub">
+                    Granule formulation → Mould design → Global export
+                    <span className="material-symbols-outlined icon-sm overlay-arrow">arrow_forward</span>
+                  </span>
                 </div>
               </div>
-              <div className="hero-flow-strip">
-                <div className="flow-info">
-                  <span className="flow-title">Integrated Flow Topology</span>
-                  <span className="flow-sub">Granules → Hot Runner → High-Volume Dispatch</span>
-                </div>
-                <Link to="/contact" className="flow-arrow">
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </Link>
-              </div>
-            </div>
-            <div className="hero-telemetry">
-              <div className="tele-item">
-                <span className="material-symbols-outlined icon-sm text-primary">thermostat</span>
-                NOZZLE TEMP: 242°C
-              </div>
-              <div className="tele-item">
-                <span className="material-symbols-outlined icon-sm text-primary">speed</span>
-                INJECTION P: 165 BAR
-              </div>
-              <div className="tele-item">
-                <span className="material-symbols-outlined icon-sm text-primary">check_circle</span>
-                PASS RATE: 99.88%
-              </div>
-            </div>
+            </Link>
+            <ul className="hero-trust">
+              <li>
+                <span className="material-symbols-outlined icon-sm text-primary">verified</span>
+                ISO 9001:2015
+              </li>
+              <li>
+                <span className="material-symbols-outlined icon-sm text-primary">directions_boat</span>
+                JNPT 28 km
+              </li>
+              <li>
+                <span className="material-symbols-outlined icon-sm text-primary">handshake</span>
+                Mutual NDA
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -222,11 +175,11 @@ const HomePage: React.FC = () => {
         <div className="container reveal">
           <div className="section-header">
             <div>
-              <span className="section-tag">Process Architecture</span>
-              <h2 className="section-title">From Virgin Raw Granules to Finished Structural Assemblies</h2>
+              <span className="section-tag">Manufacturing Quality</span>
+              <h2 className="section-title">From Virgin Polymers to Zero-Defect Components</h2>
             </div>
             <p className="section-desc">
-              Every production cycle is synchronized through our MES-driven closed-loop controller system, eliminating sink marks, flashes, and internal shear stresses.
+              Every production cycle is synchronized through our closed-loop controller system, eliminating sink marks, flash, and internal stresses before dispatch.
             </p>
           </div>
           <div className="process-grid">
@@ -256,11 +209,9 @@ const HomePage: React.FC = () => {
               <span className="section-tag">Core Production Divisions</span>
               <h2 className="section-title">Engineered Polymer Products & Custom Tooling</h2>
             </div>
-            <div className="division-filters">
-              <button className="btn btn-primary btn-sm">All Divisions</button>
-              <button className="btn btn-outline btn-sm">Industrial Logistics</button>
-              <button className="btn btn-outline btn-sm">Custom Engineering</button>
-            </div>
+            <Link to="/products" className="btn btn-outline btn-sm">
+              View All 450+ SKUs →
+            </Link>
           </div>
           <div className="divisions-grid">
             {divisions.map((div, i) => (
@@ -273,11 +224,16 @@ const HomePage: React.FC = () => {
                   <span className="division-tag">{div.tag}</span>
                   <h3 className="division-title">{div.title}</h3>
                   <p className="division-desc">{div.desc}</p>
-                  <div className="division-meta">
-                    <span>{div.resin}</span>
-                    <span className="division-moq">{div.moq}</span>
+                  <div className="division-footer">
+                    <div className="division-meta">
+                      <span>{div.resin}</span>
+                      <span className="division-moq">{div.moq}</span>
+                    </div>
+                    <Link to={div.ctaLink} className="division-cta">
+                      {div.cta}
+                      <span className="material-symbols-outlined icon-sm">arrow_forward</span>
+                    </Link>
                   </div>
-                  <Link to={div.ctaLink} className="btn btn-ghost w-full">{div.cta}</Link>
                 </div>
               </div>
             ))}
@@ -298,17 +254,12 @@ const HomePage: React.FC = () => {
             </p>
           </div>
           {/* Tabs */}
-          <div className="resin-tabs">
-            {resinKeys.map((key) => (
-              <button
-                key={key}
-                className={`resin-tab${activeResin === key ? ' active' : ''}`}
-                onClick={() => setActiveResin(key)}
-              >
-                {resinData[key].title}
-              </button>
-            ))}
-          </div>
+          <Tabs
+            tabs={resinTabs}
+            active={activeResin}
+            onChange={setActiveResin}
+            ariaLabel="Resin grade"
+          />
           {/* Content */}
           <div className="resin-card card" key={activeResin}>
             <div className="card-body resin-content">
@@ -318,7 +269,7 @@ const HomePage: React.FC = () => {
                     <h3 className="resin-title">{currentResin.title}</h3>
                     <span className="resin-grade">{currentResin.grade}</span>
                   </div>
-                  <span className="pill" style={{ background: 'var(--surface-container-high)', color: 'var(--primary)' }}>{currentResin.tag}</span>
+                  <span className="pill bg-surface-container-high text-primary">{currentResin.tag}</span>
                 </div>
                 <p className="resin-desc">{currentResin.desc}</p>
                 <div className="resin-metrics">
@@ -379,7 +330,7 @@ const HomePage: React.FC = () => {
             <div className="facility-left">
               <span className="section-tag">In-House Infrastructure</span>
               <h2 className="section-title">Engineered Moulding & High-Speed Toolroom Cells</h2>
-              <p className="section-desc" style={{ maxWidth: 'none' }}>
+              <p className="section-desc max-w-none!">
                 Equipped with European and Japanese servo-electric injection presses, 5-axis Makino vertical machining centers, and automated wire EDM stations for turnkey mould building.
               </p>
               <div className="machines-list">
@@ -441,7 +392,7 @@ const HomePage: React.FC = () => {
         <div className="container reveal">
           <div className="cta-banner card">
             <div className="cta-content">
-              <div className="badge badge-surface" style={{ width: 'fit-content' }}>
+              <div className="badge badge-surface w-fit">
                 <span className="material-symbols-outlined icon-xs">bolt</span>
                 Fast-Track Engineering Quote
               </div>

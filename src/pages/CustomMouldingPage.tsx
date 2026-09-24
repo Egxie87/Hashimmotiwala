@@ -1,20 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useAnimations';
-import './CustomMouldingPage.css';
+import { useRfq } from '../hooks/useRfq';
+import Disclosure from '../components/ui/Disclosure';
+import StatStrip, { type Stat } from '../components/ui/StatStrip';
+import '../styles/pages/CustomMouldingPage.css';
 
 const toolingSteps = [
-  { num: '01', badge: 'FEA & MFI', title: 'Moldflow Fill Analysis', desc: 'Fill simulations, shear stress profiling, injection clamp tonnage optimization, and clamp-up/ejection simulation.', metric: 'Clamp Sizing: Autodesk Moldflow', metricSub: 'Shear Rate Limit: < 49,000 1/s' },
-  { num: '02', badge: 'Compound', title: 'Polymer Formulation', desc: 'Geometric closeup of prime-listed virgin resin with specified masterbatch, flame retardants, glass fibers, and UV stabilizers.', metric: 'Blending: Magazine Gravimetric', metricSub: 'Moisture PPM: < 0.02% Dessicant' },
-  { num: '03', badge: '5-Axis CNC', title: 'Toolmaking & EDM', desc: 'Sub-micron CNC machining of Stavax® mould cores. Machine-cut EDM, copper electrodes, and SPL-Addmanship polish cavity treatment.', metric: 'High-Speed Spindle: 42,000 RPM', metricSub: 'Tolerance: < 0.005 mm' },
-  { num: '04', badge: 'Metrology', title: 'Zeiss CMM Inspection', desc: 'Full 3D optical scanning, coordinate measurement machine touchprobes A5/622, First Article Inspection (FAI), and Cpk > 1.67 statistical.', metric: 'Optical Scanner: GOM ATOS Q', metricSub: 'Compliance: PPAP Level III' },
+  { num: '01', badge: 'DFM & Moldflow', title: 'Moldflow Fill & Gate Simulation', desc: 'Fill simulations, shear stress profiling, injection clamp tonnage optimization, and clamp-up/ejection simulation.', metric: 'Simulation: Autodesk Moldflow', metricSub: 'Weld line & sink mark prediction' },
+  { num: '02', badge: 'Compound Selection', title: 'Polymer Resin Formulation', desc: 'Prime virgin resin with specified masterbatch, flame retardants, glass fibers, and UV stabilizers tailored to operational environment.', metric: 'Blending: Gravimetric Dosing', metricSub: 'Moisture Control: < 0.02% Desiccant' },
+  { num: '03', badge: '5-Axis CNC & EDM', title: 'Precision Toolmaking', desc: 'Sub-micron CNC machining of hardened mould cores. Submerged wire EDM, copper electrodes, and mirror-polish cavity treatment.', metric: 'High-Speed Spindle: 24,000 RPM', metricSub: 'Tolerance: ±0.005 mm' },
+  { num: '04', badge: 'CMM Metrology', title: 'Zeiss Optical Inspection', desc: 'Full 3D optical scanning, coordinate measurement machine touchprobes, First Article Inspection (FAI), and PPAP Level III compliance.', metric: 'Metrology: Optical CMM Scanner', metricSub: 'Statistical Capability: Cpk > 1.67' },
 ];
 
-const polymerMatrix = [
-  { name: '±HDPE (High-Density Polyethylene)', sub: 'Commodity Polyolefin', density: '0.86 – 0.97', tensile: '22 – 32', flexural: '1.0 – 1.4', hdt: '70°C', shrinkage: '1.8 – 2.8%', apps: 'Industrial crates, bulk chemical containers, pallet components' },
-  { name: 'PP Copolymer (Impact Modified)', sub: 'Technical Polyolefin', density: '0.90 – 0.91', tensile: '26 – 34', flexural: '1.3 – 1.6', hdt: '95°C', shrinkage: '1.2 – 1.8%', apps: 'Automotive battery casings, snap-fit chassis, structural seating' },
-  { name: 'Polycarbonate (Lexan / Makrolon)', sub: 'Amorphous Engineering Thermoplastic', density: '1.20 – 1.22', tensile: '50 – 72', flexural: '2.3 – 2.5', hdt: '130°C', shrinkage: '0.5 – 0.7%', apps: 'Optical housings, electrical switchgear, high-impact faceplates' },
-  { name: 'POM (Polyoxymethylene) Delrin', sub: 'Semi-Crystalline Acetal', density: '1.41 – 1.43', tensile: '68 – 80', flexural: '2.8 – 3.2', hdt: '124°C', shrinkage: '1.8 – 2.3%', apps: 'Precision gears, valve components, bearings, fuel sender mechanisms' },
+const heroStats: Stat[] = [
+  { label: 'Clamping Scope', value: '50T – 1800T', sub: '35 Servo & Hydraulic Cells' },
+  { label: 'Mould Life Guarantee', value: 'Class 101', sub: '1,000,000+ Cycles Certified' },
+  { label: 'DFM Engineering Review', value: '24 – 48', unit: 'Hrs', sub: 'Full Moldflow Simulation' },
+  { label: 'Core & Cavity Steels', value: 'H13 / S136 / P20', sub: 'Hardened to 48-52 HRC' },
+];
+
+const dfmRules = [
+  { title: 'Draft Angle Analysis', desc: '1.0° to 2.0° standard for effortless core/cavity release.' },
+  { title: 'Nominal Wall Thickness Uniformity', desc: 'Rib-to-wall ratio 40–60% to prevent sink marks and internal voids.' },
+  { title: 'Gate Location & Knit Line Optimization', desc: 'Sub-gates, hot tips, or valve gates positioned for structural integrity.' },
+  { title: 'Radius & Fillet Integrity', desc: 'Min. 0.5R fillets at sharp transitions to eliminate notch concentration.' },
+];
+
+const toolingSteels = [
+  { steel: 'Stavax ESR (S136)', hardness: '48 – 52 HRC', corrosion: 'Superior (Mirror Polish)', apps: 'Medical packaging, optical lenses, clear polycarbonate parts' },
+  { steel: 'Orvar Supreme (H13)', hardness: '46 – 50 HRC', corrosion: 'Good (High Thermal Toughness)', apps: 'Heavy-duty transport crates, chemical pails, 1M+ cycle moulds' },
+  { steel: 'P20 + Ni (Pre-hardened)', hardness: '28 – 32 HRC', corrosion: 'Standard', apps: 'Automotive prototype tooling, pilot batches (up to 250k cycles)' },
+  { steel: 'Beryllium Copper (BeCu)', hardness: '38 – 42 HRC', corrosion: 'High Thermal Dissipation', apps: 'Critical core cooling pins, hot spot reduction, cycle reduction' },
 ];
 
 const dispatches = [
@@ -24,33 +41,86 @@ const dispatches = [
 ];
 
 const CustomMouldingPage: React.FC = () => {
+  const [dragActive, setDragActive] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const { showToast } = useRfq();
+
   const heroRef = useScrollReveal<HTMLElement>();
   const cadRef = useScrollReveal<HTMLElement>();
   const archRef = useScrollReveal<HTMLElement>();
   const matRef = useScrollReveal<HTMLElement>();
   const dispRef = useScrollReveal<HTMLElement>();
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setUploadedFile(file);
+      showToast(`Attached ${file.name} for DFM review`, 'success');
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      setUploadedFile(file);
+      showToast(`Attached ${file.name} for DFM review`, 'success');
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragActive(false);
+  };
+
+  const removeFile = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setUploadedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    showToast('Removed attached CAD file', 'info');
+  };
+
+  const proceedToQuote = () => {
+    navigate('/contact', {
+      state: {
+        attachedFileName: uploadedFile ? uploadedFile.name : undefined,
+        service: 'Custom Moulding & Tooling',
+      },
+    });
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
   return (
     <main className="dfm-page">
       {/* Hero */}
       <section className="dfm-hero section" ref={heroRef}>
         <div className="container reveal">
-          <div className="badge badge-surface" style={{ width: 'fit-content', marginBottom: 'var(--space-xs)' }}>
+          <div className="badge badge-surface mb-2 w-fit">
             <span className="material-symbols-outlined icon-xs">precision_manufacturing</span>
-            ENGINEERING MOULD PORTAL // INJECTION MOULDING & DFM
+            IN-HOUSE TOOLROOM & CONTRACT MOULDING
           </div>
-          <h1 className="hero-title" style={{ maxWidth: 700 }}>
-            Precision Mould Tooling & Computational DFM Telemetry
+          <h1 className="hero-title max-w-[700px]">
+            Precision Mould Tooling & Engineering DFM Review
           </h1>
           <p className="hero-desc">
-            Direct cloud interface into Hashim Motiwala's precision tooling engine. Run instantaneous design-for-manufacturing checks, evaluate volumetric resin rheology, and configure production-grade injection mould suites.
+            Direct access to Hashim Motiwala's precision toolroom engineering. Submit 3D CAD files for draft angle validation, gating optimization, and turnkey multi-cavity injection tooling quotes.
           </p>
-          <div className="dfm-metrics-row">
-            <div className="dfm-metric"><span className="dfm-metric-label">Clamping Scope</span><span className="dfm-metric-val">120T – 2,200T</span><span className="dfm-metric-sub">30 Hydraulic Cells</span></div>
-            <div className="dfm-metric"><span className="dfm-metric-label">Mould Life Class</span><span className="dfm-metric-val">Class 101</span><span className="dfm-metric-sub">1,000,000+ Cycles Guaranteed</span></div>
-            <div className="dfm-metric"><span className="dfm-metric-label">DFM Turnaround</span><span className="dfm-metric-val">&lt; 3 Hours</span><span className="dfm-metric-sub">Automated AI Telemetry</span></div>
-            <div className="dfm-metric"><span className="dfm-metric-label">Core & Cavity Steels</span><span className="dfm-metric-val">H13 / S136 / H13</span><span className="dfm-metric-sub">50-55HRC Hardened</span></div>
-          </div>
+          <StatStrip stats={heroStats} tone="plain" className="mt-4 md:mt-8" />
         </div>
       </section>
 
@@ -58,37 +128,116 @@ const CustomMouldingPage: React.FC = () => {
       <section className="section section-alt" ref={cadRef}>
         <div className="container reveal">
           <div className="section-header">
-            <div><span className="section-tag">Module 01 // Computational Injection</span><h2 className="section-title">CAD Pre-Flight & Moldflow Analysis Engine</h2></div>
-            <div className="badge badge-surface">256-Bit Encrypted ITAR & ISO 27001 Secure File Vault</div>
+            <div>
+              <span className="section-tag">Direct Engineering Portal</span>
+              <h2 className="section-title">Submit 3D CAD for Tooling Feasibility & Quote</h2>
+            </div>
           </div>
           <div className="cad-grid">
             <div className="cad-upload-area card">
-              <div className="card-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-                <div className="cad-dropzone">
-                  <span className="material-symbols-outlined icon-lg text-primary">cloud_upload</span>
-                  <h3 className="text-headline-sm font-bold">Transmit 3D Native Geometry</h3>
-                  <p className="text-body-sm text-on-surface-variant">Drag & drop your CAD model here, or browse from disk. We accept STEP, IGES, SLDPRT, DWG, DXF, and Parasolid files up to 350 MB.</p>
-                  <div className="cad-formats">
-                    {['.STP', '.STEP', '.IGES', '.IGS', '.SLDPRT', '.X_T'].map(f => <span key={f} className="badge badge-surface">{f}</span>)}
+              <div className="card-body gap-4">
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept=".stp,.step,.iges,.igs,.sldprt,.x_t,.dwg,.dxf,.pdf"
+                  hidden
+                />
+
+                {/* Dropzone */}
+                <div
+                  className={`cad-dropzone${dragActive ? ' drag-active' : ''}${uploadedFile ? ' has-file' : ''}`}
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Upload CAD file"
+                >
+                  {uploadedFile ? (
+                    <div className="cad-file-preview">
+                      <div className="file-icon-wrap">
+                        <span className="material-symbols-outlined icon-lg text-primary">description</span>
+                      </div>
+                      <div className="file-info-text">
+                        <span className="file-name">{uploadedFile.name}</span>
+                        <span className="file-size">{formatFileSize(uploadedFile.size)} • Ready for submission</span>
+                      </div>
+                      <button
+                        type="button"
+                        className="file-remove-btn"
+                        onClick={removeFile}
+                        title="Remove file"
+                      >
+                        <span className="material-symbols-outlined icon-sm">close</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="material-symbols-outlined icon-lg text-primary">cloud_upload</span>
+                      <h3 className="text-headline-sm font-bold">Select or Drag & Drop 3D CAD Geometry</h3>
+                      <p className="text-body-sm text-on-surface-variant">
+                        Click to browse or drop your model — up to 150 MB.
+                      </p>
+                      <div className="cad-formats">
+                        {['.STP', '.STEP', '.IGES', '.SLDPRT', '.X_T', '.PDF'].map((f) => (
+                          <span key={f} className="badge badge-surface">{f}</span>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                <div className="cad-features">
+                  <div className="cad-feature">
+                    <span className="material-symbols-outlined icon-xs text-primary">shield</span>
+                    <span>Mutual NDA Protection — Automatic confidentiality</span>
+                  </div>
+                  <div className="cad-feature">
+                    <span className="material-symbols-outlined icon-xs text-primary">schedule</span>
+                    <span>24-Hour Tooling Review — Lead engineer assignment</span>
+                  </div>
+                  <div className="cad-feature">
+                    <span className="material-symbols-outlined icon-xs text-primary">precision_manufacturing</span>
+                    <span>Direct Moldflow Feasibility & Cycle-Time Estimation</span>
                   </div>
                 </div>
-                <div className="cad-features">
-                  <div className="cad-feature"><span className="material-symbols-outlined icon-xs text-primary">shield</span> Mutual NDA Protection — Active upon receipt</div>
-                  <div className="cad-feature"><span className="material-symbols-outlined icon-xs text-primary">speed</span> 48-Hour Pre-Process — Dx Materialized Response</div>
-                  <div className="cad-feature"><span className="material-symbols-outlined icon-xs text-primary">person</span> Senior Tooling Lead — Assigned with 5 min</div>
-                </div>
-                <button className="btn btn-primary btn-lg w-full">
-                  <span className="material-symbols-outlined icon-sm">play_arrow</span>
-                  SUBMIT ENTERPRISE RFQ DIRECT TO TOOLING ENGINEERING
+
+                <button
+                  type="button"
+                  className="btn btn-primary btn-lg w-full"
+                  onClick={proceedToQuote}
+                >
+                  <span className="material-symbols-outlined icon-sm">send</span>
+                  {uploadedFile
+                    ? `Proceed to RFQ with ${uploadedFile.name}`
+                    : 'Submit RFQ Direct to Tooling Engineering'}
                 </button>
               </div>
             </div>
+
             <div className="cad-rules card">
-              <div className="card-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-                <div><span className="section-tag">Diagnostics</span><h3 className="text-headline-sm font-bold">Active DFM Ruleset</h3><span className="badge badge-surface">ASTM D3835</span></div>
-                <div className="rule-item"><span className="material-symbols-outlined icon-xs text-primary">check_circle</span><div><strong>Draft Angle Validation (Core / Cavity)</strong><p className="text-body-sm text-on-surface-variant">1.5° Standard</p></div></div>
-                <div className="rule-item"><span className="material-symbols-outlined icon-xs text-primary">check_circle</span><div><strong>Wall Thickness & Sink Risk</strong><p className="text-body-sm text-on-surface-variant">1.2 mm – 4.1 mm</p></div></div>
-                <div className="rule-item"><span className="material-symbols-outlined icon-xs text-primary">check_circle</span><div><strong>Gate Topology & Weld Lines</strong><p className="text-body-sm text-on-surface-variant">Sub-Gate / Hot Tip</p></div></div>
+              <div className="card-body gap-3">
+                <div>
+                  <span className="section-tag">Engineering Rules</span>
+                  <h3 className="text-headline-sm font-bold">Design For Manufacturing Checklist</h3>
+                  <p className="text-body-sm text-on-surface-variant">Standard ASTM / ISO practice we check on every upload.</p>
+                </div>
+                <div className="divide-y divide-surface-container">
+                  {dfmRules.map((rule, i) => (
+                    <Disclosure
+                      key={rule.title}
+                      variant="inline"
+                      icon="check_circle"
+                      summary={rule.title}
+                      defaultOpen={i === 0}
+                    >
+                      <p className="pl-7 text-body-sm text-on-surface-variant">{rule.desc}</p>
+                    </Disclosure>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -98,20 +247,27 @@ const CustomMouldingPage: React.FC = () => {
       {/* Tooling Architecture */}
       <section className="section" ref={archRef}>
         <div className="container reveal">
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}>
+          <div className="mb-8 text-center">
             <span className="section-tag">From Pellet to Precision Component</span>
-            <h2 className="section-title" style={{ maxWidth: 700, margin: '0 auto' }}>End-to-End Tooling & Moulding Architecture</h2>
-            <p className="section-desc" style={{ maxWidth: 600, margin: 'var(--space-xs) auto 0' }}>Engineered for zero-defect production. Every project proceeds through our unified TTC Industrial facility with deterministic stage gates.</p>
+            <h2 className="section-title mx-auto max-w-[700px]!">
+              Turnkey Mould Building & Manufacturing Stages
+            </h2>
+            <p className="section-desc mx-auto mt-2 max-w-[600px]!">
+              Engineered for zero-defect production. Every custom project proceeds through our unified TTC Industrial facility with strict quality stage gates.
+            </p>
           </div>
           <div className="process-grid">
             {toolingSteps.map((s, i) => (
               <div className={`process-card reveal reveal-delay-${i + 1}`} key={s.num}>
-                <div className="process-top"><span className="process-num">{s.num}</span><span className="badge badge-surface">{s.badge}</span></div>
+                <div className="process-top">
+                  <span className="process-num">{s.num}</span>
+                  <span className="badge badge-surface">{s.badge}</span>
+                </div>
                 <h3 className="process-title">{s.title}</h3>
                 <p className="process-desc">{s.desc}</p>
-                <div className="process-footer" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
+                <div className="process-footer flex-col items-start! gap-0.5">
                   <span className="process-metric">{s.metric}</span>
-                  <span className="process-metric" style={{ opacity: 0.7 }}>{s.metricSub}</span>
+                  <span className="process-metric opacity-70">{s.metricSub}</span>
                 </div>
               </div>
             ))}
@@ -119,19 +275,36 @@ const CustomMouldingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Polymer Material Matrix */}
+      {/* Tooling Steel Compatibility */}
       <section className="section section-alt" ref={matRef}>
         <div className="container reveal">
           <div className="section-header">
-            <div><span className="section-tag">Module 02 // Rheology & Chemistry</span><h2 className="section-title">Engineering Polymer Material Matrix</h2></div>
-            <p className="section-desc">Standard test conditions: 23°C @ 50% RH</p>
+            <div>
+              <span className="section-tag">Toolroom Metallurgy</span>
+              <h2 className="section-title">Core & Cavity Tooling Steel Selection Guide</h2>
+            </div>
+            <p className="section-desc">Selected based on production volume, resin abrasiveness, and optical surface finish demands.</p>
           </div>
           <div className="card table-scroll-wrap">
             <table className="data-table">
-              <thead><tr><th>Polymer Classification</th><th>Density (g/cm³)</th><th>Tensile Strength (MPa)</th><th>Flexural Modulus (GPa)</th><th>HDT @ 0.45 MPa (°C)</th><th>Shrinkage Rate (%)</th><th>Typical Applications</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Tooling Steel Grade</th>
+                  <th>Core Hardness</th>
+                  <th>Corrosion & Polish Resistance</th>
+                  <th className="text-right">Recommended Production Scope</th>
+                </tr>
+              </thead>
               <tbody>
-                {polymerMatrix.map(r => (
-                  <tr key={r.name}><td><span className="text-primary font-bold">{r.name}</span><br /><span className="text-body-sm text-on-surface-variant">{r.sub}</span></td><td>{r.density}</td><td>{r.tensile}</td><td>{r.flexural}</td><td>{r.hdt}</td><td>{r.shrinkage}</td><td className="text-body-sm">{r.apps}</td></tr>
+                {toolingSteels.map((s) => (
+                  <tr key={s.steel}>
+                    <td>
+                      <span className="text-primary font-bold">{s.steel}</span>
+                    </td>
+                    <td>{s.hardness}</td>
+                    <td>{s.corrosion}</td>
+                    <td className="text-body-sm text-right">{s.apps}</td>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -143,11 +316,16 @@ const CustomMouldingPage: React.FC = () => {
       <section className="section" ref={dispRef}>
         <div className="container reveal">
           <div className="section-header">
-            <div><span className="section-tag">Factory Proven Tooling Cases</span><h2 className="section-title">Recent Enterprise Production Dispatches</h2></div>
-            <Link to="/products" className="btn btn-outline btn-sm">Explore Complete SKU Catalog →</Link>
+            <div>
+              <span className="section-tag">Proven Production Cases</span>
+              <h2 className="section-title">Recent Custom Injection Tooling Projects</h2>
+            </div>
+            <Link to="/products" className="btn btn-outline btn-sm">
+              Explore Standard Catalog →
+            </Link>
           </div>
           <div className="dispatches-grid">
-            {dispatches.map(d => (
+            {dispatches.map((d) => (
               <div className="dispatch-card card" key={d.title}>
                 <div className="dispatch-img-wrap">
                   <img src={d.img} alt={d.title} loading="lazy" />
@@ -162,22 +340,6 @@ const CustomMouldingPage: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="section section-highlight">
-        <div className="container">
-          <div className="cta-banner card">
-            <div className="cta-content">
-              <h2 className="cta-title">Have an urgent RFQ or proprietary CAD file?</h2>
-              <p className="cta-desc">Our tooling engineering team provides signed non-disclosure agreements prior to CAD review.</p>
-            </div>
-            <div className="cta-actions">
-              <Link to="/contact" className="btn btn-outline btn-lg">Email Engineering Desk</Link>
-              <Link to="/contact" className="btn btn-primary btn-lg">Instant RFQ Portal</Link>
-            </div>
           </div>
         </div>
       </section>

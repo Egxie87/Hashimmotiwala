@@ -1,0 +1,283 @@
+/* Contact Page Styles */
+.contact-hero { background: var(--surface-container-lowest); }
+.contact-hero-actions { display: flex; gap: var(--space-sm); margin-top: var(--space-sm); }
+
+/* RFQ Form & Info Grid */
+.contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-xl); align-items: flex-start; }
+.rfq-form-wrap { position: sticky; top: 120px; }
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
+.form-group { display: flex; flex-direction: column; gap: var(--space-xxs); }
+.form-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--on-surface); }
+
+/* Form Errors */
+.input.input-error {
+  border-color: var(--error);
+  background-color: rgba(186, 26, 26, 0.02);
+}
+
+.form-error-msg {
+  font-size: 0.75rem;
+  color: var(--error);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* RFQ Manifest Attachment Card */
+.rfq-manifest-attachment-card {
+  background: var(--surface-container);
+  border: 1px solid var(--primary-fixed-dim);
+  border-radius: var(--radius-lg);
+  padding: 0.875rem 1rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rma-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rma-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--on-surface);
+}
+
+.rma-edit-link {
+  font-size: 0.775rem;
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.rma-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.rma-chip {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--surface-container-high);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.checkbox-grid { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-xxs); }
+
+/* Interactive File Dropzone */
+.file-drop-interactive {
+  border: 2px dashed var(--outline-variant);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  background: var(--surface);
+  transition: all 0.2s ease;
+}
+
+.file-drop-interactive:hover {
+  border-color: var(--primary);
+  background: var(--surface-container-low);
+}
+
+.file-drop-selected {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+  width: 100%;
+}
+
+.file-drop-selected strong {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--on-surface);
+}
+
+.contact-info-col { display: flex; flex-direction: column; gap: var(--space-md); }
+.contact-address { display: flex; flex-direction: column; gap: 2px; font-size: 14px; color: var(--on-surface-variant); }
+.contact-lines { display: flex; flex-direction: column; gap: var(--space-sm); }
+.contact-line { display: flex; gap: var(--space-xs); align-items: flex-start; }
+.contact-line div { display: flex; flex-direction: column; }
+.contact-line strong { font-size: 14px; color: var(--on-surface); }
+.contact-line a,
+.contact-line span { font-size: 13px; color: var(--on-surface-variant); text-decoration: none; }
+.contact-line a:hover { color: var(--primary); }
+.cert-badges-row { display: flex; flex-wrap: wrap; gap: var(--space-xxs); }
+
+/* Logistics: freight cards + transit matrix */
+.freight-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+.transit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
+.transit-card .card-body { display: flex; flex-direction: column; gap: var(--space-xs); }
+.transit-region { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--primary); letter-spacing: 0.06em; }
+.transit-dest { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--on-surface); }
+.transit-time { display: flex; flex-direction: column; padding: var(--space-xs) 0; }
+.transit-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--secondary); }
+.transit-val { font-family: var(--font-display); font-size: 32px; font-weight: 900; color: var(--on-surface); }
+.transit-val small { font-size: 14px; font-weight: 600; color: var(--primary); }
+.transit-meta { display: flex; flex-direction: column; gap: 2px; margin-top: auto; font-size: 12px; color: var(--on-surface-variant); border-top: 1px solid var(--surface-container); padding-top: var(--space-xs); }
+
+/* Confirmation Modal */
+.rfq-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(11, 28, 48, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: confirmFadeIn 0.25s ease;
+}
+
+.rfq-confirm-dialog {
+  max-width: 520px;
+  width: 100%;
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: confirmPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes confirmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes confirmPop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.confirm-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirm-icon-wrap .material-symbols-outlined {
+  font-size: 38px;
+}
+
+.confirm-ref-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface-container);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--on-surface-variant);
+}
+
+.confirm-ref-badge strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.confirm-specs-box {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin: 1.25rem 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--surface-container-high);
+}
+
+.confirm-spec-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.825rem;
+}
+
+.confirm-spec-row span {
+  color: var(--outline);
+}
+
+.confirm-spec-row strong {
+  color: var(--on-surface);
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .rfq-form-wrap { position: static; }
+  .freight-cards { grid-template-columns: repeat(2, 1fr); }
+  .transit-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+
+  .checkbox-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .file-drop-interactive {
+    padding: 16px 12px;
+  }
+
+  .rfq-form-wrap .card-body {
+    padding: 16px 14px;
+    gap: var(--space-sm);
+  }
+
+  .freight-cards,
+  .transit-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .transit-val {
+    font-size: 24px;
+  }
+
+  .contact-hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .contact-hero-actions .btn {
+    width: 100%;
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+
+}
